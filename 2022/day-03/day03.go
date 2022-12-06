@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
 
 var priority map[byte]int
@@ -23,6 +24,7 @@ func main() {
 }
 
 func part1() {
+	t := time.Now()
 	f, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
@@ -52,10 +54,12 @@ func part1() {
 		}
 	}
 
-	fmt.Println("Sum 1:", sum)
+	took := time.Now().Sub(t)
+	fmt.Printf("Sum 1: %d (took %v)\n", sum, took)
 }
 
 func part2() {
+	t := time.Now()
 	f, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
@@ -94,5 +98,6 @@ func part2() {
 		}
 	}
 
-	fmt.Println("Sum 2:", sum)
+	took := time.Now().Sub(t)
+	fmt.Printf("Sum 2: %d (took %v)\n", sum, took)
 }

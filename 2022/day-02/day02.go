@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 type Shape int
@@ -62,6 +63,7 @@ var outcomeScore = map[Outcome]int{
 }
 
 func main() {
+	t := time.Now()
 	b, _ := os.ReadFile("input.txt")
 	lines := strings.Split(string(b), "\n")
 
@@ -79,8 +81,10 @@ func main() {
 		score2 += shapeScore[findShape(opponent, outcome)] + outcomeScore[outcome]
 	}
 
+	took := time.Now().Sub(t)
 	fmt.Println("Score 1:", score1)
 	fmt.Println("Score 2:", score2)
+	fmt.Printf("(took %v)\n", took)
 }
 
 func roundOutcome(player, opponent Shape) int {

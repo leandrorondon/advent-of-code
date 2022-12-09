@@ -26,11 +26,15 @@ func main() {
 
 	sum := findSumDirsWithMaxSize(root, 100000)
 
+	needsToFree := 30000000 - (70000000 - root.Size)
+	size := SizeOfTheSmallestDirectoryThatIfDeletedWouldFreeUpEnoughSpaceOnTheFilesystemToRunTheUpdate(root, needsToFree)
+
 	took := time.Now().Sub(t)
+
 	printTree(root, 0)
 	fmt.Println("\nSum part 1:", sum)
+	fmt.Println("Size part 2:", size)
 	fmt.Printf("(took %v)\n", took)
-
 }
 
 func NewDir(name string) *Dir {
@@ -130,4 +134,22 @@ func printTree(dir *Dir, offset int) {
 	for name, size := range dir.Files {
 		fmt.Printf("%s | %s (%d)\n", o, name, size)
 	}
+}
+
+func SizeOfTheSmallestDirectoryThatIfDeletedWouldFreeUpEnoughSpaceOnTheFilesystemToRunTheUpdate(dir *Dir, needsToFree int) int {
+	smallest := 70000000
+
+	if dir.Size >= needsToFree {
+		smallest = dir.Size
+	}
+
+	for _, d := range dir.Dirs {
+		found := SizeOfTheSmallestDirectoryThatIfDeletedWouldFreeUpEnoughSpaceOnTheFilesystemToRunTheUpdate(d, needsToFree)
+
+		if found >= needsToFree && found < smallest {
+			smallest = found
+		}
+	}
+
+	return smallest
 }

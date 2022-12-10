@@ -1,4 +1,4 @@
-package main
+package puzzles2022
 
 import (
 	"fmt"
@@ -9,9 +9,12 @@ import (
 	"time"
 )
 
-func main() {
+func Day01(file string) error {
 	t := time.Now()
-	b, _ := os.ReadFile("input-1.txt")
+	b, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
 	lines := strings.Split(string(b), "\n")
 
 	var a []int
@@ -35,4 +38,6 @@ func main() {
 	fmt.Println("Top 1:", a[0])
 	fmt.Println("Top 3:", a[0]+a[1]+a[2])
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }

@@ -1,4 +1,4 @@
-package main
+package puzzles2022
 
 import (
 	"fmt"
@@ -6,9 +6,12 @@ import (
 	"time"
 )
 
-func main() {
+func Day06(file string) error {
 	t := time.Now()
-	text, _ := os.ReadFile("input.txt")
+	text, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
 	packet := detect(text, 4)
 	message := detect(text, 14)
 	took := time.Now().Sub(t)
@@ -16,6 +19,8 @@ func main() {
 	fmt.Println("Chars until first start-of-packet is detected:", packet)
 	fmt.Println("Chars until first start-of-message is detected:", message)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 func detect(text []byte, size int) int {

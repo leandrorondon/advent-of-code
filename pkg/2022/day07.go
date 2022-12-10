@@ -1,20 +1,19 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func main() {
+func Day07(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -31,10 +30,11 @@ func main() {
 
 	took := time.Now().Sub(t)
 
-	printTree(root, 0)
-	fmt.Println("\nSum part 1:", sum)
+	fmt.Println("Sum part 1:", sum)
 	fmt.Println("Size part 2:", size)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 func NewDir(name string) *Dir {

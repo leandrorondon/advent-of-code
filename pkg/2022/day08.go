@@ -1,18 +1,17 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"time"
 )
 
-func main() {
+func Day08(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -62,6 +61,8 @@ func main() {
 	fmt.Println("Trees visible from outside the grid:", visibleCount)
 	fmt.Println("Highest scenic score:", highestScenicScore)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 func evaluate(tree byte, maxVisible *byte, visible *bool, count *int) {

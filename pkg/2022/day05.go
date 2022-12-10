@@ -1,20 +1,19 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func main() {
+func Day05(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -69,6 +68,8 @@ func main() {
 	fmt.Println("Crates on top:", s)
 	fmt.Println("Crates on top 2:", s2)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 type Stack []string

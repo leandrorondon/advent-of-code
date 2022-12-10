@@ -1,4 +1,4 @@
-package main
+package puzzles2022
 
 import (
 	"fmt"
@@ -62,9 +62,13 @@ var outcomeScore = map[Outcome]int{
 	Win:  6,
 }
 
-func main() {
+func Day02(file string) error {
 	t := time.Now()
-	b, _ := os.ReadFile("input.txt")
+	b, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
+
 	lines := strings.Split(string(b), "\n")
 
 	var score1, score2 int
@@ -85,6 +89,8 @@ func main() {
 	fmt.Println("Score 1:", score1)
 	fmt.Println("Score 2:", score2)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 func roundOutcome(player, opponent Shape) int {

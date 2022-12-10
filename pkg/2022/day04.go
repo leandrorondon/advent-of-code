@@ -1,20 +1,19 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func main() {
+func Day04(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -47,6 +46,8 @@ func main() {
 	fmt.Println("Fully contained:", contains)
 	fmt.Println("Overlaps       :", overlaps)
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 type Range struct {

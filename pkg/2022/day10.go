@@ -1,20 +1,19 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func main() {
+func Day10(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -26,10 +25,12 @@ func main() {
 	}
 
 	took := time.Now().Sub(t)
-	fmt.Println("Part 1:", cpu.strength)
-	fmt.Println("Part 2:", 2)
+	fmt.Println("Sum of signal strengths:", cpu.strength)
+	fmt.Println("CRT output:")
 	cpu.CRT.print()
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 func NewCPU() *CPU {

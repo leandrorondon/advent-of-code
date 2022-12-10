@@ -1,9 +1,8 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"time"
 )
@@ -18,16 +17,21 @@ func init() {
 	}
 }
 
-func main() {
-	part1()
-	part2()
+func Day03(file string) error {
+	if err := part1(file); err != nil {
+		return err
+	}
+	if err := part2(file); err != nil {
+		return err
+	}
+	return nil
 }
 
-func part1() {
+func part1(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -56,13 +60,14 @@ func part1() {
 
 	took := time.Now().Sub(t)
 	fmt.Printf("Sum 1: %d (took %v)\n", sum, took)
+	return nil
 }
 
-func part2() {
+func part2(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -100,4 +105,5 @@ func part2() {
 
 	took := time.Now().Sub(t)
 	fmt.Printf("Sum 2: %d (took %v)\n", sum, took)
+	return nil
 }

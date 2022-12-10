@@ -1,9 +1,8 @@
-package main
+package puzzles2022
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"math"
 	"os"
 	"strconv"
@@ -11,11 +10,11 @@ import (
 	"time"
 )
 
-func main() {
+func Day09(file string) error {
 	t := time.Now()
-	f, err := os.Open("input.txt")
+	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
@@ -48,6 +47,8 @@ func main() {
 	fmt.Println("Part 1:", len(visited1))
 	fmt.Println("Part 2:", len(visited2))
 	fmt.Printf("(took %v)\n", took)
+
+	return nil
 }
 
 type Coord struct {

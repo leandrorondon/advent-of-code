@@ -24,6 +24,7 @@ type Monkey struct {
 	operator     string
 	operand      Operand
 	operandValue int
+	adjustLevel  int
 	divisor      int
 	monkeyTrue   int
 	monkeyFalse  int
@@ -57,8 +58,16 @@ func (m *Monkey) PrintInspections() {
 	fmt.Printf("Monkey %d inspected items %d times.\n", m.id, m.inspections)
 }
 
+func (m *Monkey) Divisor() int {
+	return m.divisor
+}
+
 func (m *Monkey) Inspections() int {
 	return m.inspections
+}
+
+func (m *Monkey) SetAdjustLevel(level int) {
+	m.adjustLevel = level
 }
 
 func (m *Monkey) inspect(i int) {
@@ -84,7 +93,7 @@ func (m *Monkey) operation(i, v int) {
 }
 
 func (m *Monkey) adjust(i int) {
-	m.items[i] = m.items[i] / 3
+	m.items[i] /= m.adjustLevel
 }
 
 func (m *Monkey) throw(i, dest int, monkeys []*Monkey) {

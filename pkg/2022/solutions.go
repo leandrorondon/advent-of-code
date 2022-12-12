@@ -1,6 +1,6 @@
 package puzzles2022
 
-// Solutions points to the solutions of 2022's implementations.
+// Solutions points to the implementations of 2022's puzzles.
 var Solutions = map[int]func(string) error{
 	1:  Day01,
 	2:  Day02,
@@ -13,4 +13,5 @@ var Solutions = map[int]func(string) error{
 	9:  Day09,
 	10: Day10,
 	11: Day11,
+	12: Day12,
 }

@@ -50,20 +50,27 @@ func (c Runner) Run(cmd *cobra.Command, _ []string) {
 
 func (c Runner) runDay(cmd *cobra.Command, day int) {
 	file, _ := cmd.Flags().GetString("file")
+	test, _ := cmd.Flags().GetBool("test")
+
 	if file == "" {
-		file = defaultInputFile(c.year, day)
+		file = defaultInputFile(c.year, day, test)
 	}
 	c.solve(day, file)
 }
 
 func (c Runner) runAll(cmd *cobra.Command) {
+	test, _ := cmd.Flags().GetBool("test")
 	for day := 1; day <= 25; day++ {
-		file := defaultInputFile(c.year, day)
+		file := defaultInputFile(c.year, day, test)
 		c.solve(day, file)
 	}
 }
 
-func defaultInputFile(year, day int) string {
+func defaultInputFile(year, day int, test bool) string {
+	if test {
+		return fmt.Sprintf("assets/inputs/%d/day%02d_test.txt", year, day)
+	}
+
 	return fmt.Sprintf("assets/inputs/%d/day%02d.txt", year, day)
 }
 

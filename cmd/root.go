@@ -27,6 +27,8 @@ func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.PersistentFlags().IntP("day", "d", 0, "Number of the day: 1 to 25")
 	rootCmd.PersistentFlags().StringP("file", "f", "", "Input file (use only when specifying a day)")
+	rootCmd.PersistentFlags().BoolP("test", "t", false, "Use the test input for the day")
+	rootCmd.MarkFlagsMutuallyExclusive("file", "test")
 
 	rootCmd.AddCommand(New(2022, puzzles2022.Solutions))
 }

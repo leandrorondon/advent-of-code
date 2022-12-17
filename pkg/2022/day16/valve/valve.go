@@ -3,6 +3,7 @@ package valve
 import "fmt"
 
 type Valve struct {
+	ID      int
 	Label   string
 	Rate    int
 	Tunnels []*Valve

@@ -33,6 +33,7 @@ func (p *Parser) ScanValves() map[string]*valve.Valve {
 		return m
 	}
 
+	id := 0
 	for p.scanner.Scan() {
 		text := p.scanner.Text()
 		if text == "" {
@@ -55,6 +56,8 @@ func (p *Parser) ScanValves() map[string]*valve.Valve {
 			}
 			m[label] = v
 		}
+		v.ID = id
+		id++
 
 		var next []*valve.Valve
 		for _, lbl := range leads {

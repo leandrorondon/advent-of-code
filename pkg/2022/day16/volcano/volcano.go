@@ -1,6 +1,9 @@
 package volcano
 
 import (
+	"sort"
+	"sync"
+
 	"github.com/leandrorondon/advent-of-code/pkg/2022/day16/valve"
 	"github.com/leandrorondon/advent-of-code/pkg/graph"
 	"github.com/leandrorondon/advent-of-code/pkg/math"
@@ -84,17 +87,41 @@ func (v Volcano) HighestPossiblePressureReleased(from *valve.Valve, maxTime int)
 }
 
 func (v Volcano) FindBestCombination(paths []*Node) int {
-	highest := 0
-	for i := 0; i < len(paths)-1; i++ {
-		for j := i + 1; j < len(paths); j++ {
-			// ignore crossed paths
-			if paths[i].Visited&paths[j].Visited != 0 {
-				continue
-			}
+	routines := 100
 
-			highest = math.Max(highest, paths[i].PressureReleased+paths[j].PressureReleased)
+	inc := len(paths) / routines
+	var wg sync.WaitGroup
+	highests := make([]int, routines)
+
+	for r := 0; r < routines; r++ {
+		from := r * inc
+		to := (r+1)*inc - 1
+		if r == routines-1 {
+			to = len(paths) - 1
 		}
+		wg.Add(1)
+		go func(r, from, to int) {
+			highest := 0
+			for i := from; i < to; i++ {
+			outer:
+				for j := i + 1; j < len(paths); j++ {
+					// ignore crossed paths
+					if paths[i].Visited&paths[j].Visited != 0 {
+						continue outer
+					}
+
+					highest = math.Max(highest, paths[i].PressureReleased+paths[j].PressureReleased)
+				}
+			}
+			highests[r] = highest
+			wg.Done()
+		}(r, from, to)
+
 	}
 
-	return highest
+	wg.Wait()
+
+	sort.Ints(highests)
+
+	return highests[len(highests)-1]
 }

@@ -24,12 +24,13 @@ func Day16(file string) error {
 
 	t1 := time.Now()
 	krakatoa := volcano.New(valves)
-	part1 := krakatoa.HighestPossiblePressureReleased(valves["AA"], 30)
+	part1, _ := krakatoa.HighestPossiblePressureReleased(valves["AA"], 30)
 	took1 := time.Now().Sub(t1)
 	fmt.Printf("- Part 1: %d (took %v)\n", part1, took1)
 
 	t2 := time.Now()
-	part2 := krakatoa.HighestPossiblePressureReleased(valves["AA"], 26)
+	_, all := krakatoa.HighestPossiblePressureReleased(valves["AA"], 26)
+	part2 := krakatoa.FindBestCombination(all)
 	took2 := time.Now().Sub(t2)
 	fmt.Printf("- Part 2: %d (took %v)\n", part2, took2)
 

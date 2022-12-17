@@ -7,8 +7,9 @@ import (
 )
 
 type Volcano struct {
-	valves    []*valve.Valve
-	distances [][]int
+	valves     []*valve.Valve
+	distances  [][]int
+	bitmaskMap map[int]int64
 }
 
 func New(valvesMap map[string]*valve.Valve) Volcano {
@@ -22,7 +23,9 @@ func New(valvesMap map[string]*valve.Valve) Volcano {
 	}
 
 	m := make([][]int, len(valvesMap))
+	bitmaskMap := make(map[int]int64)
 	for _, v1 := range valvesMap {
+		bitmaskMap[v1.ID] = 1 << v1.ID
 		m[v1.ID] = make([]int, len(valvesMap))
 		for _, v2 := range valvesMap {
 			if v2.Rate > 0 && v1 != v2 {
@@ -32,8 +35,9 @@ func New(valvesMap map[string]*valve.Valve) Volcano {
 	}
 
 	return Volcano{
-		valves:    valves,
-		distances: m,
+		valves:     valves,
+		distances:  m,
+		bitmaskMap: bitmaskMap,
 	}
 }
 
@@ -41,14 +45,13 @@ type Node struct {
 	ValveID          int
 	Time             int
 	PressureReleased int
-	Visited          []bool
+	Visited          int64
 }
 
 func (v Volcano) HighestPossiblePressureReleased(from *valve.Valve, maxTime int) (int, []*Node) {
 	var queue []*Node
 	queue = append(queue, &Node{
 		ValveID: from.ID,
-		Visited: make([]bool, len(v.valves)),
 	})
 
 	highest := 0
@@ -64,15 +67,12 @@ func (v Volcano) HighestPossiblePressureReleased(from *valve.Valve, maxTime int)
 		for _, next := range v.valves {
 			dist := v.distances[current.ValveID][next.ID]
 
-			if next.Rate > 0 && current.Time+dist <= maxTime && !current.Visited[next.ID] {
-				visited := make([]bool, len(current.Visited))
-				copy(visited, current.Visited)
-				visited[next.ID] = true
+			if next.Rate > 0 && current.Time+dist <= maxTime && (current.Visited&v.bitmaskMap[next.ID]) == 0 {
 				moveAndOpen := dist + 1
 				node := &Node{
 					ValveID:          next.ID,
 					Time:             current.Time + moveAndOpen, // +1 to open the valve
-					Visited:          visited,
+					Visited:          current.Visited | v.bitmaskMap[next.ID],
 					PressureReleased: current.PressureReleased + (maxTime-(current.Time+moveAndOpen))*next.Rate,
 				}
 				queue = append(queue, node)
@@ -86,13 +86,10 @@ func (v Volcano) HighestPossiblePressureReleased(from *valve.Valve, maxTime int)
 func (v Volcano) FindBestCombination(paths []*Node) int {
 	highest := 0
 	for i := 0; i < len(paths)-1; i++ {
-	outer:
 		for j := i + 1; j < len(paths); j++ {
 			// ignore crossed paths
-			for id, visited := range paths[i].Visited {
-				if visited && paths[j].Visited[id] {
-					continue outer
-				}
+			if paths[i].Visited&paths[j].Visited != 0 {
+				continue
 			}
 
 			highest = math.Max(highest, paths[i].PressureReleased+paths[j].PressureReleased)

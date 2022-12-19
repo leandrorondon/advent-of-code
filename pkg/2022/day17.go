@@ -32,7 +32,18 @@ func Day17(file string) error {
 	fmt.Printf("- Part 1: %d (took %v)\n", part1, took1)
 
 	t2 := time.Now()
-	part2 := 2
+	jetGen = tetris.NetJetGenerator(jetPattern)
+	rockGen = tetris.NewRockGenerator()
+	chamber = tetris.NewChamber(ChamberWidth, jetGen, rockGen, false)
+	found1, found2 := tetris.FindSimilarPatterns(chamber)
+	cycle := found2.Rocks - found1.Rocks
+	incrementPerCycle := found2.Height - found1.Height
+	n := 1_000_000_000_000
+	cycles := (n - found2.Rocks) / cycle
+	remaining := (n - found2.Rocks) % cycle
+	tetris.Simulate(chamber, remaining)
+
+	part2 := cycles*incrementPerCycle + chamber.Height
 	took2 := time.Now().Sub(t2)
 	fmt.Printf("- Part 2: %d (took %v)\n", part2, took2)
 

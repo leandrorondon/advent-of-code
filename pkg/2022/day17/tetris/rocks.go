@@ -1,11 +1,5 @@
 package tetris
 
-import (
-	"fmt"
-	"strconv"
-	"strings"
-)
-
 func NewRock(t Rock) *Rock {
 	return &Rock{
 		Pattern: t.Pattern,
@@ -20,21 +14,6 @@ type Rock struct {
 	Cols     int
 	Rows     int
 	Rest     bool
-}
-
-func (r *Rock) Print() {
-	for i := r.Rows - 1; i >= 0; i-- {
-		bitsPattern := r.Pattern[i]
-
-		s := strconv.FormatInt(int64(bitsPattern), 2)
-		v, _ := strconv.Atoi(s)
-		l := strings.Repeat("0", r.Cols-len(s))
-		s = fmt.Sprintf("%s%d", l, v)
-		s = strings.ReplaceAll(s, "1", "#")
-		s = strings.ReplaceAll(s, "0", ".")
-		fmt.Println(s)
-	}
-	fmt.Printf("\n")
 }
 
 var (

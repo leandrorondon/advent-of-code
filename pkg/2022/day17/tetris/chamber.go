@@ -10,7 +10,7 @@ import (
 
 type Chamber struct {
 	Height        int
-	width         int
+	Width         int
 	chamber       []int
 	current       *Rock
 	currentInLine []int
@@ -22,7 +22,7 @@ type Chamber struct {
 
 func NewChamber(width int, jetGen *JetGenerator, rockGen *RockGenerator, print bool) *Chamber {
 	c := &Chamber{
-		width:     width,
+		Width:     width,
 		leftLimit: 1 << (width + 1),
 		print:     print,
 		rockGen:   rockGen,
@@ -33,14 +33,13 @@ func NewChamber(width int, jetGen *JetGenerator, rockGen *RockGenerator, print b
 }
 
 func (c *Chamber) SpawnRock() {
-
 	c.current = c.rockGen.Generate()
 	c.current.Position.X = 2
 	c.current.Position.Y = c.Height + 3
 
 	c.currentInLine = make([]int, c.current.Rows)
 	for i := 0; i < c.current.Rows; i++ {
-		c.currentInLine[i] = c.current.Pattern[i] << (c.width - c.current.Cols - 2)
+		c.currentInLine[i] = c.current.Pattern[i] << (c.Width - c.current.Cols - 2)
 	}
 }
 
@@ -55,10 +54,6 @@ func (c *Chamber) SettleCurrentRock() {
 	rock.Rest = true
 	c.current = nil
 	c.currentInLine = nil
-
-	for i := len(c.chamber); i < rock.Position.Y; i++ {
-		c.chamber = append(c.chamber, 0)
-	}
 
 	for i := rock.Position.Y; i < rock.Position.Y+rock.Rows; i++ {
 		if i == len(c.chamber) {
@@ -85,7 +80,7 @@ func (c *Chamber) Print() {
 			fmt.Printf("%4d |%s|\n", y, c.toLine(c.chamber[y], "#"))
 		}
 	}
-	fmt.Printf("   F +%s+\n", strings.Repeat("-", c.width))
+	fmt.Printf("   F +%s+\n", strings.Repeat("-", c.Width))
 }
 
 func (c *Chamber) Tick() {
@@ -143,7 +138,7 @@ func (c *Chamber) Jet() {
 func (c *Chamber) toLine(n int, r string) string {
 	s := strconv.FormatInt(int64(n), 2)
 	v, _ := strconv.Atoi(s)
-	l := strings.Repeat("0", c.width-len(s))
+	l := strings.Repeat("0", c.Width-len(s))
 	s = fmt.Sprintf("%s%d", l, v)
 	s = strings.ReplaceAll(s, "1", r)
 	s = strings.ReplaceAll(s, "0", ".")
@@ -193,4 +188,12 @@ func (c *Chamber) jetLeft() {
 	}
 	c.currentInLine = newLines
 	c.current.Position.X--
+}
+
+func (c *Chamber) NextRockIndex() int {
+	return c.rockGen.Next()
+}
+
+func (c *Chamber) NextJetIndex() int {
+	return c.jetGen.Next()
 }

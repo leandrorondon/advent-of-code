@@ -1,23 +1,32 @@
 package tetris
 
 type RockGenerator struct {
-	n       int
-	created int
+	idx int
+	max int
 }
 
 var creationSequence = []Rock{rock1, rock2, rock3, rock4, rock5}
 
 func NewRockGenerator() *RockGenerator {
 	return &RockGenerator{
-		n: len(creationSequence),
+		max: len(creationSequence),
 	}
 }
 
-func (r *RockGenerator) Generate() *Rock {
-	idx := r.created % r.n
-	r.created++
+func (g *RockGenerator) Generate() *Rock {
+	rock := creationSequence[g.idx]
 
-	return NewRock(creationSequence[idx])
+	g.idx++
+	if g.idx == g.max {
+		g.idx = 0
+	}
+	idx = g.idx
+
+	return NewRock(rock)
+}
+
+func (g *RockGenerator) Next() int {
+	return g.idx
 }
 
 type JetGenerator struct {
@@ -35,14 +44,18 @@ func NetJetGenerator(pattern []byte) *JetGenerator {
 
 var idx = 0
 
-func (r *JetGenerator) Generate() byte {
-	jet := r.pattern[r.idx]
+func (g *JetGenerator) Generate() byte {
+	jet := g.pattern[g.idx]
 
-	r.idx++
-	if r.idx == r.max {
-		r.idx = 0
+	g.idx++
+	if g.idx == g.max {
+		g.idx = 0
 	}
-	idx = r.idx
+	idx = g.idx
 
 	return jet
+}
+
+func (g *JetGenerator) Next() int {
+	return g.idx
 }

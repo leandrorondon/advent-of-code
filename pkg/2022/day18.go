@@ -17,16 +17,18 @@ func Day18(file string) error {
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-
-	t1 := time.Now()
 	p := day18.NewParser(scanner)
 	droplets := p.ScanDroplets()
+	droplets2 := make([]day18.XYZ, len(droplets))
+	copy(droplets2, droplets)
+
+	t1 := time.Now()
 	part1 := day18.SurfaceArea(droplets)
 	took1 := time.Now().Sub(t1)
 	fmt.Printf("- Part 1: %d (took %v)\n", part1, took1)
 
 	t2 := time.Now()
-	part2 := 2
+	part2 := day18.ExternalSurface(droplets2)
 	took2 := time.Now().Sub(t2)
 	fmt.Printf("- Part 2: %d (took %v)\n", part2, took2)
 
@@ -34,5 +36,3 @@ func Day18(file string) error {
 	fmt.Printf("(took %v)\n", took)
 	return nil
 }
-
-// same x,y or x,z or z,y and subsequent

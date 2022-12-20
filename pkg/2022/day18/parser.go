@@ -19,8 +19,8 @@ func NewParser(s Scanner) *Parser {
 	}
 }
 
-func (p *Parser) ScanDroplets() []Droplet {
-	var droplets []Droplet
+func (p *Parser) ScanDroplets() []XYZ {
+	var droplets []XYZ
 
 	for p.scanner.Scan() {
 		text := p.scanner.Text()
@@ -28,7 +28,7 @@ func (p *Parser) ScanDroplets() []Droplet {
 			continue
 		}
 
-		var droplet Droplet
+		var droplet XYZ
 		fmt.Sscanf(text, "%d,%d,%d", &droplet.X, &droplet.Y, &droplet.Z)
 		droplets = append(droplets, droplet)
 	}

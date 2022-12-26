@@ -11,11 +11,6 @@ type Parser struct {
 	file string
 }
 
-type Scanner interface {
-	Scan() bool
-	Text() string
-}
-
 func NewParser(f string) *Parser {
 	return &Parser{
 		file: f,

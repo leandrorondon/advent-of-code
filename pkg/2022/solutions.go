@@ -21,4 +21,5 @@ var Solutions = map[int]func(string) error{
 	17: Day17,
 	18: Day18,
 	20: Day20,
+	21: Day21,
 }

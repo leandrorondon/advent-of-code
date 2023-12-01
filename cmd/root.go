@@ -3,8 +3,10 @@ package cmd
 import (
 	"os"
 
-	puzzles2022 "github.com/leandrorondon/advent-of-code/pkg/2022"
 	"github.com/spf13/cobra"
+
+	puzzles2022 "github.com/leandrorondon/advent-of-code/pkg/2022"
+	puzzles2023 "github.com/leandrorondon/advent-of-code/pkg/2023"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -25,10 +27,11 @@ func Execute() {
 
 func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
-	rootCmd.PersistentFlags().IntP("day", "d", 0, "Number of the day: 1 to 25")
+	rootCmd.PersistentFlags().IntP("day", "d", 0, "Day: 1 to 25")
 	rootCmd.PersistentFlags().StringP("file", "f", "", "Input file (use only when specifying a day)")
 	rootCmd.PersistentFlags().BoolP("test", "t", false, "Use the test input for the day")
 	rootCmd.MarkFlagsMutuallyExclusive("file", "test")
 
 	rootCmd.AddCommand(New(2022, puzzles2022.Solutions))
+	rootCmd.AddCommand(New(2023, puzzles2023.Solutions))
 }

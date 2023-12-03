@@ -2,13 +2,14 @@ package puzzles2023
 
 import (
 	"fmt"
+	"github.com/leandrorondon/advent-of-code/pkg/ternary"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-var maxSet = gameSet{R: 12, G: 13, B: 14}
+var maxSet = rgb{R: 12, G: 13, B: 14}
 
 func Day02(file string) error {
 	t := time.Now()
@@ -20,13 +21,13 @@ func Day02(file string) error {
 
 	sum := 0
 
-game:
+game1:
 	for _, line := range lines {
 		game := parseLine(line)
 
 		for _, set := range game.Sets {
 			if !set.isPossible(maxSet) {
-				continue game
+				continue game1
 			}
 		}
 
@@ -36,6 +37,26 @@ game:
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", sum)
+	fmt.Printf("(took %v)\n", took)
+
+	sum = 0
+
+	for _, line := range lines {
+		game := parseLine(line)
+
+		var minSet rgb
+		for _, set := range game.Sets {
+			minSet.R = ternary.If(set.R > minSet.R, set.R, minSet.R)
+			minSet.G = ternary.If(set.G > minSet.G, set.G, minSet.G)
+			minSet.B = ternary.If(set.B > minSet.B, set.B, minSet.B)
+		}
+
+		power := minSet.R * minSet.G * minSet.B
+		sum += power
+	}
+
+	took = time.Now().Sub(t)
+	fmt.Println("Part 2:", sum)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil
@@ -56,10 +77,10 @@ func parseGameID(s string) int {
 	return i
 }
 
-func parseSets(s string) []gameSet {
+func parseSets(s string) []rgb {
 	ss := strings.Split(s, ";")
 
-	sets := make([]gameSet, len(ss))
+	sets := make([]rgb, len(ss))
 
 	for i, set := range ss {
 		sets[i] = parseSet(set)
@@ -68,10 +89,10 @@ func parseSets(s string) []gameSet {
 	return sets
 }
 
-func parseSet(s string) gameSet {
+func parseSet(s string) rgb {
 	ss := strings.Split(s, ",")
 
-	var set gameSet
+	var set rgb
 
 	for _, colourSet := range ss {
 		colour := strings.Split(strings.TrimSpace(colourSet), " ")
@@ -88,17 +109,17 @@ func parseSet(s string) gameSet {
 	return set
 }
 
-type gameSet struct {
+type rgb struct {
 	R int
 	G int
 	B int
 }
 
-func (s gameSet) isPossible(max gameSet) bool {
+func (s rgb) isPossible(max rgb) bool {
 	return s.R <= max.R && s.G <= max.G && s.B <= max.B
 }
 
 type rgbGame struct {
 	ID   int
-	Sets []gameSet
+	Sets []rgb
 }

@@ -30,8 +30,19 @@ func Day03(file string) error {
 		}
 	}
 
+	gearRatioSum := 0
+
+	for _, symbolsLine := range symbols {
+		for _, sym := range symbolsLine {
+			if sym.IsGear() {
+				gearRatioSum += sym.GearRatio()
+			}
+		}
+	}
+
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", partNumberSum)
+	fmt.Println("Part 1:", gearRatioSum)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

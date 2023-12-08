@@ -42,7 +42,7 @@ func Day03(file string) error {
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", partNumberSum)
-	fmt.Println("Part 1:", gearRatioSum)
+	fmt.Println("Part 2:", gearRatioSum)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

@@ -23,8 +23,19 @@ func Day04(file string) error {
 		cardPointSum += ps
 	}
 
+	totalCards := 0
+	for i, card := range cards {
+		matches := card.Matches()
+		for k := 1; k <= matches && (i+k) < len(cards); k++ {
+			cards[i+k].Copies += card.Copies
+		}
+
+		totalCards += card.Copies
+	}
+
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", cardPointSum)
+	fmt.Println("Part 2:", totalCards)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

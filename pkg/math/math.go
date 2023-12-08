@@ -15,17 +15,17 @@ func Max[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 |
 }
 
 func MaxS[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float64 | float32](v ...T) T {
-	var max T
+	var m T
 	if len(v) < 1 {
-		return max
+		return m
 	}
 
-	max = v[0]
+	m = v[0]
 	for i := 1; i < len(v); i++ {
-		max = Max(max, v[i])
+		m = Max(m, v[i])
 	}
 
-	return max
+	return m
 }
 
 func Min[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float64 | float32](v1, v2 T) T {
@@ -51,4 +51,8 @@ func Sum[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 |
 	}
 
 	return sum
+}
+
+func BetweenInclusive[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float64 | float32](v, b, e T) bool {
+	return v >= b && v <= e
 }

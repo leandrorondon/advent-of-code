@@ -14,7 +14,7 @@ type Map []Range
 
 func (m Map) Convert(input int64) int64 {
 	for i := range m {
-		if math.BetweenInclusive(input, m[i].Source, m[i].Source+m[i].Range) {
+		if math.BetweenInclusive(input, m[i].Source, m[i].Source+m[i].Range-1) {
 			return m[i].Dest + (input - m[i].Source)
 		}
 	}
@@ -27,8 +27,8 @@ type Maps []Map
 
 func (ms Maps) GetLocation(seed int64) int64 {
 	tmp := seed
-	for _, m := range ms {
-		tmp = m.Convert(tmp)
+	for i := range ms {
+		tmp = ms[i].Convert(tmp)
 	}
 	return tmp
 }

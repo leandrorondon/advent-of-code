@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func ParseLines(s string) (races Races) {
+func ParseRaces(s string) (races Races) {
 	lines := strings.Split(s, "\n")
 
 	ss := strings.Split(lines[0], "Time:")
@@ -24,6 +24,20 @@ func ParseLines(s string) (races Races) {
 	}
 
 	return races
+}
+
+func ParseSingleRace(s string) (race Race) {
+	lines := strings.Split(s, "\n")
+
+	ss := strings.Split(lines[0], "Time:")
+	tt := strings.ReplaceAll(ss[1], " ", "")
+	time, _ := strconv.Atoi(tt)
+
+	ss = strings.Split(lines[1], "Distance:")
+	dd := strings.ReplaceAll(ss[1], " ", "")
+	distance, _ := strconv.Atoi(dd)
+
+	return Race{time, distance}
 }
 
 func parseIntSlice(ss []string) (ii []int) {

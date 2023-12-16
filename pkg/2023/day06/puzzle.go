@@ -9,6 +9,8 @@ func (r Race) WaysToWin() (wins int) {
 	for i := 1; i < r.Time; i++ {
 		if r.DistanceWithPress(i) > r.Distance {
 			wins++
+		} else if wins > 0 {
+			break
 		}
 	}
 	return wins

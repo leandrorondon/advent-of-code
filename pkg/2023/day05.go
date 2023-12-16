@@ -2,11 +2,12 @@ package puzzles2023
 
 import (
 	"fmt"
-	"github.com/leandrorondon/advent-of-code/pkg/2023/day05"
 	"math"
 	"os"
 	"sync"
 	"time"
+	
+	"github.com/leandrorondon/advent-of-code/pkg/2023/day05"
 )
 
 func Day05(file string) error {

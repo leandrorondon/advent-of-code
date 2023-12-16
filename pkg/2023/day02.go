@@ -2,11 +2,12 @@ package puzzles2023
 
 import (
 	"fmt"
-	"github.com/leandrorondon/advent-of-code/pkg/ternary"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/leandrorondon/advent-of-code/pkg/ternary"
 )
 
 var maxSet = rgb{R: 12, G: 13, B: 14}

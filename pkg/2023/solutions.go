@@ -9,4 +9,5 @@ var Solutions = map[int]func(string) error{
 	5: Day05,
 	6: Day06,
 	7: Day07,
+	8: Day08,
 }

@@ -2,7 +2,6 @@ package puzzles2023
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"time"
 
@@ -20,7 +19,6 @@ func Day06(file string) error {
 	margin := races.MarginOfError()
 
 	race := day06.ParseSingleRace(string(b))
-	fmt.Println(race, math.MaxInt)
 	waysToWin := race.WaysToWin()
 
 	took := time.Now().Sub(t)

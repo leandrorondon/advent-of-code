@@ -69,7 +69,6 @@ func Day01(file string) error {
 				break
 			}
 		}
-		fmt.Println(ll, line, string(s))
 		v, _ := strconv.Atoi(string(s))
 		sum += v
 	}

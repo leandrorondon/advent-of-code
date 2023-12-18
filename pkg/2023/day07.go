@@ -15,12 +15,15 @@ func Day07(file string) error {
 		return err
 	}
 
-	plays := day07.ParsePlays(string(b))
+	plays := day07.ParsePlays(string(b), day07.CardValuesP1, day07.GetCardsAndCountsP1)
 	total := plays.TotalWins()
+
+	plays2 := day07.ParsePlays(string(b), day07.CardValuesP2, day07.GetCardsAndCountsP2)
+	total2 := plays2.TotalWins()
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", total)
-	fmt.Println("Part 2:", 2)
+	fmt.Println("Part 2:", total2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

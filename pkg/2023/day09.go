@@ -17,10 +17,11 @@ func Day09(file string) error {
 
 	histories := day09.ParseHistories(string(b))
 	sum := histories.SumExtrapolations()
+	sum2 := histories.SumExtrapolationsBack()
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", sum)
-	fmt.Println("Part 2:", 1)
+	fmt.Println("Part 2:", sum2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

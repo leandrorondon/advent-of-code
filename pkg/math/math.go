@@ -56,3 +56,16 @@ func Sum[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 |
 func BetweenInclusive[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float64 | float32](v, b, e T) bool {
 	return v >= b && v <= e
 }
+
+func LCM(x, y int) int {
+	return x * y / GCD(x, y)
+}
+
+func GCD(x, y int) int {
+	for y != 0 {
+		t := y
+		y = x % y
+		x = t
+	}
+	return x
+}

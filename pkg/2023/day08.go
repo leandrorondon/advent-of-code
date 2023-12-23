@@ -16,12 +16,14 @@ func Day08(file string) error {
 	}
 
 	sequence, initial := day08.ParseMap(string(b))
+	steps, _ := initial.Steps(&sequence, day08.CompFn(day08.Final))
 
-	steps := initial.Steps(day08.Final, &sequence)
+	sequence, initials := day08.ParseMap2(string(b))
+	steps2 := initials.Steps(&sequence)
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", steps)
-	fmt.Println("Part 2:", 2)
+	fmt.Println("Part 2:", steps2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

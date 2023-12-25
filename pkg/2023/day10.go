@@ -17,13 +17,14 @@ func Day10(file string) error {
 
 	m := day10.ParseMap(string(b))
 
-	m.BuildNeighbourhood()
+	m.BuildGraph()
 
 	p1 := m.Farthest(m.Start)
+	p2 := m.Internals()
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", p1)
-	fmt.Println("Part 2:", 2)
+	fmt.Println("Part 2:", p2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

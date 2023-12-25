@@ -17,13 +17,11 @@ func ParseMap(s string) Map {
 		}
 
 		for i := 0; i < len(lines[r]); i++ {
-			if lines[r][i] != '.' {
-				m.Nodes[r][i] = &Node{
-					Value:       string(lines[r][i]),
-					R:           r,
-					C:           i,
-					Connections: make(map[Direction]*Node),
-				}
+			m.Nodes[r][i] = &Node{
+				Value:       string(lines[r][i]),
+				R:           r,
+				C:           i,
+				Connections: make(map[Direction]*Node),
 			}
 		}
 	}

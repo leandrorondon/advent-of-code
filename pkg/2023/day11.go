@@ -17,12 +17,15 @@ func Day11(file string) error {
 
 	m := day11.Parse(string(b))
 
-	exp := m.Expand()
+	exp := m.Expand(2)
 	p1 := exp.SumDistances()
+
+	exp = m.Expand(1000000)
+	p2 := exp.SumDistances()
 
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", p1)
-	fmt.Println("Part 2:", 0)
+	fmt.Println("Part 2:", p2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

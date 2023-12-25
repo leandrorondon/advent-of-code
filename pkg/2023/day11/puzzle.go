@@ -47,7 +47,9 @@ func (m *Map) Print() {
 	}
 }
 
-func (m *Map) Expand() *Map {
+func (m *Map) Expand(n int) *Map {
+	n = n - 1
+
 	rowGalaxyMap := make(map[int]bool)
 	colGalaxyMap := make(map[int]bool)
 
@@ -67,7 +69,7 @@ func (m *Map) Expand() *Map {
 	for i := range emptyRows {
 		for j, g := range galaxies {
 			if emptyRows[i] < m.Galaxies[j].R {
-				g.R++
+				g.R += n
 			}
 		}
 	}
@@ -75,14 +77,14 @@ func (m *Map) Expand() *Map {
 	for i := range emptyCols {
 		for j, g := range galaxies {
 			if emptyCols[i] < m.Galaxies[j].C {
-				g.C++
+				g.C += n
 			}
 		}
 	}
 
 	return &Map{
-		Rows:     m.Rows + len(emptyRows),
-		Cols:     m.Cols + len(emptyCols),
+		Rows:     m.Rows + len(emptyRows)*n,
+		Cols:     m.Cols + len(emptyCols)*n,
 		Galaxies: galaxies,
 	}
 }

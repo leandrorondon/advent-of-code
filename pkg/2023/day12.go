@@ -17,9 +17,12 @@ func Day12(file string) error {
 	m := day12.Parse(string(b))
 	p1 := m.SumCombinations()
 
+	exp := m.Unfold(5)
+	p2 := exp.SumCombinations()
+
 	took := time.Now().Sub(t)
 	fmt.Println("Part 1:", p1)
-	fmt.Println("Part 2:", 1)
+	fmt.Println("Part 2:", p2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

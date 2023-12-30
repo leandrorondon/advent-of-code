@@ -19,9 +19,13 @@ func Day14(file string) error {
 	m.TiltNorth()
 	p1 := m.Load()
 
+	//m.Reset()
+	m.Cycle(1000000000)
+	p2 := m.Load()
+
 	took := time.Since(t)
 	fmt.Println("Part 1:", p1)
-	fmt.Println("Part 2:", 2)
+	fmt.Println("Part 2:", p2)
 	fmt.Printf("(took %v)\n", took)
 
 	return nil

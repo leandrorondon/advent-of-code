@@ -17,7 +17,9 @@ func Parse(s string) Patterns {
 
 	for i := range lines {
 		if lines[i] == "" {
-			p.Columns = buildCols(p.Rows, len(lines[i-1]))
+			p.Cols = buildCols(p.Rows, len(lines[i-1]))
+			p.RowSize = len(p.Cols)
+			p.ColSize = len(p.Rows)
 			ps = append(ps, p)
 			p = Pattern{}
 			continue
@@ -30,7 +32,9 @@ func Parse(s string) Patterns {
 
 		p.Rows = append(p.Rows, n)
 	}
-	p.Columns = buildCols(p.Rows, len(lines[len(lines)-1]))
+	p.Cols = buildCols(p.Rows, len(lines[len(lines)-1]))
+	p.RowSize = len(p.Cols)
+	p.ColSize = len(p.Rows)
 	ps = append(ps, p)
 
 	return ps

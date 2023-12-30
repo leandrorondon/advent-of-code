@@ -16,12 +16,15 @@ func Day13(file string) error {
 	}
 
 	patterns := day13.Parse(string(b))
+
+	t2 := time.Now()
 	p1 := patterns.Summarise()
 
-	took := time.Now().Sub(t)
+	took := time.Since(t)
+	processing := time.Since(t2)
 	fmt.Println("Part 1:", p1)
 	fmt.Println("Part 2:", 2)
-	fmt.Printf("(took %v)\n", took)
+	fmt.Printf("(took %v, %v processing)\n", took, processing)
 
 	return nil
 }

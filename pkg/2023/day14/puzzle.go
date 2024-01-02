@@ -2,6 +2,7 @@ package day14
 
 import (
 	"fmt"
+	"hash/fnv"
 )
 
 const (
@@ -10,25 +11,38 @@ const (
 	empty = '.'
 )
 
+type Direction int
+
+const (
+	North Direction = iota
+	South
+	East
+	West
+)
+
 type Map struct {
 	m [][]byte
 }
 
+func (m *Map) TiltNorth() {
+	m.Tilt(m.rollColNorth)
+}
+
 func (m *Map) Cycle(n int) {
-	loadMap := make(map[string]int)
+	loadMap := make(map[uint64]int)
 	useMap := true
 
 	for i := 0; i < n; i++ {
-		m.TiltNorth()
-		m.TiltWest()
-		m.TiltSouth()
-		m.TiltEast()
+		m.Tilt(m.rollColNorth)
+		m.Tilt(m.rollRowWest)
+		m.Tilt(m.rollColSouth)
+		m.Tilt(m.rollRowEast)
 
 		if useMap {
-			s := m.str()
-			last, ok := loadMap[s]
+			hash := m.hash()
+			last, ok := loadMap[hash]
 			if !ok {
-				loadMap[s] = i
+				loadMap[hash] = i
 				continue
 			}
 			useMap = false
@@ -38,35 +52,17 @@ func (m *Map) Cycle(n int) {
 	}
 }
 
-func (m *Map) str() string {
-	s := ""
+func (m *Map) hash() uint64 {
+	hasher := fnv.New64a()
 	for i := range m.m {
-		s += string(m.m[i])
+		hasher.Write(m.m[i])
 	}
-	return s
+	return hasher.Sum64()
 }
 
-func (m *Map) TiltNorth() {
+func (m *Map) Tilt(tiltFunc func(int)) {
 	for c := range m.m[0] {
-		m.rollColNorth(c)
-	}
-}
-
-func (m *Map) TiltSouth() {
-	for c := range m.m[0] {
-		m.rollColSouth(c)
-	}
-}
-
-func (m *Map) TiltWest() {
-	for r := range m.m {
-		m.rollRowWest(r)
-	}
-}
-
-func (m *Map) TiltEast() {
-	for r := range m.m {
-		m.rollRowEast(r)
+		tiltFunc(c)
 	}
 }
 

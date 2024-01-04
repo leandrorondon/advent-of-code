@@ -17,6 +17,9 @@ func (s *Stack[T]) Prepend(v T) {
 }
 
 func (s *Stack[T]) Pop() T {
+	if len(s.elems) == 0 {
+		return *new(T)
+	}
 	n := len(s.elems) - 1
 	b := s.elems[n]
 	s.elems = s.elems[:n]

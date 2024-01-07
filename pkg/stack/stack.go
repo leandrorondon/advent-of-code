@@ -4,7 +4,7 @@ type Stack[T any] struct {
 	elems []T
 }
 
-func NewStack[T any]() *Stack[T] {
+func New[T any]() *Stack[T] {
 	return &Stack[T]{nil}
 }
 

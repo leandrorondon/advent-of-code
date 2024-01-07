@@ -58,7 +58,7 @@ func (m *Map) IsEdge(r, c int) bool {
 
 func (m *Map) LoopSize(p Position) int {
 	start := m.Nodes[p.R][p.C]
-	st := stack.NewStack[SearchStep]()
+	st := stack.New[SearchStep]()
 
 	st.Push(SearchStep{
 		Node:     start,
@@ -237,7 +237,7 @@ func (m *Map) findWayOut(node *Node, expanded *Map) bool {
 
 	expandedNode := expanded.Nodes[node.R*2][node.C*2]
 
-	st := stack.NewStack[WayOutStep]()
+	st := stack.New[WayOutStep]()
 
 	st.Push(WayOutStep{
 		Node:    expandedNode,

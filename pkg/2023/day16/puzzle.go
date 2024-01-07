@@ -79,7 +79,7 @@ func (m *Map) Reset() {
 func (m *Map) Ray(r, c int, coming Direction) int {
 	m.Reset()
 
-	st := stack.NewStack[*Step]()
+	st := stack.New[*Step]()
 	var initial *Mirror
 	switch coming {
 	case left:
